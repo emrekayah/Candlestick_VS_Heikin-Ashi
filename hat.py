@@ -28,8 +28,6 @@ def up_data(symbol,radios):
     df.reset_index(drop=True, inplace=True)
     return df
 
-
-
 app.layout = dbc.Container([
     html.H1(' Candlestick Chart vs Heikin-Ashi Chart', style={'textAlign': 'center'}),
      
