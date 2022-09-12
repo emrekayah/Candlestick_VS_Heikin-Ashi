@@ -7,11 +7,19 @@ from datetime import date, timedelta
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.LUMEN])
 
-symbol='ETH-USD'
-radios="1d"
+
 def up_data(symbol,radios):
+    def day_finder(radios):
+        match radios:
+            case "5m": return 1
+            case "1h": return 7
+            case "1d": return 120
+            case "1wk": return 365*1.5
+            case "1mo": return 365*3
+
+    day=day_finder(radios)        
     end_date= date.today().strftime("%Y-%m-%d")
-    start_date= (date.today() - timedelta(days=365)).strftime("%Y-%m-%d")
+    start_date= (date.today() - timedelta(days=day)).strftime("%Y-%m-%d")
 
     df = yf.download(symbol, 
                    interval=radios,
@@ -44,14 +52,14 @@ app.layout = dbc.Container([
                 {"label": "5 minute", "value":"5m"},
                 {"label": "1 hour  ", "value":"1h"},
                 {"label": "1 day   ", "value":"1d"},
-                {"label": "1 week  ", "value":"1wk"} 
+                {"label": "1 week  ", "value":"1wk"},
+                {"label": "1 month   ", "value":"1mo"}  
             ],
             value="1d",
         ),],
         className="radio-group"
         ), 
     ]),
-
     dbc.Row([
         dbc.Col([html.Label('CandleStick Chart')], width=dict(size=4, offset=2)),
         dbc.Col([html.Label('Heikin-Ashi')], width=dict(size=4, offset=2))
@@ -82,7 +90,6 @@ def build_graphs(symbol,toggle_rangeslider,radios):
     df=up_data(symbol,radios) 
 
     print(symbol)
-    print(df.head())
 
     fig_candle = go.Figure(
         go.Candlestick(x=df['Date'],
