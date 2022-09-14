@@ -4,6 +4,10 @@
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/77856593/190024244-2177fbed-5d53-463e-a134-b21c3561394f.gif)
 
+## Feedback
+
+If you have any feedback, please reach out to us at emrekaya5007@gmail.com
+
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
