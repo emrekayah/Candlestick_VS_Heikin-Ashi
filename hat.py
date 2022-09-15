@@ -7,15 +7,15 @@ from datetime import date, timedelta
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.LUMEN])
 
-
-def up_data(symbol,radios):
+def up_data(symbol,radios): 
+    
     def day_finder(radios):
         match radios:
             case "5m": return 1
             case "1h": return 7
             case "1d": return 120
-            case "1wk": return 365*1.5
-            case "1mo": return 365*3
+            case "1wk": return 365*3
+            case "1mo": return 365*5
 
     day=day_finder(radios)        
     end_date= date.today().strftime("%Y-%m-%d")
@@ -27,11 +27,14 @@ def up_data(symbol,radios):
                    end=end_date, 
                    progress=False)
     df["Date"] = df.index
+
     df = df[["Date", "Open", "High", "Low", 
              "Close", "Adj Close", "Volume"]]
-
     df["Close_hk"]=(df["Open"]+df["High"]+df["Low"]+df["Close"])/4
-    df["Open_hk"]=(df["Open"].shift(1)+df["Close"].shift(1))/2
+    df["Open_hk"]=df["Open"]
+    df["Open_hk"]=((df["Open_hk"].shift(1)+df["Close_hk"].shift(1))/2).fillna(df["Open"])
+    df['High_hk'] = df.loc[:,['Open_hk', 'Close_hk']].join(df['High']).max(axis=1)
+    df['Low_hk'] = df.loc[:,['Open_hk', 'Close_hk']].join(df['Low']).min(axis=1)
 
     df.reset_index(drop=True, inplace=True)
     return df
@@ -107,8 +110,8 @@ def build_graphs(symbol,toggle_rangeslider,radios):
     fig_hk = go.Figure(
         go.Candlestick(x=df['Date'],
                        open=df['Open_hk'],
-                       high=df['High'],
-                       low=df['Low'],
+                       high=df['High_hk'],
+                       low=df['Low_hk'],
                        close=df["Close_hk"],
                        text=df['Volume'])
     )
