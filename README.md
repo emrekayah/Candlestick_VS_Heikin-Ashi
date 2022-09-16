@@ -1,6 +1,6 @@
 # Candlestick_VS_Heikin-Ashi  <a href="https://www.python.org/" target="_blank"><img style="margin: 1px" src="https://profilinator.rishav.dev/skills-assets/python-original.svg" alt="Python" height="40" /></a>  
 
-#### In this project, I coded a dashbord that allows comparing two financial charting methods. 
+#### In this project, I coded a dashboard using python, yfinance and plotly that allows comparing two financial charting methods. 
 #### ◎ The First one is Candlestick------> the Candlestick pattern is the world's most widely used financial charting method.
 #### ◎ The Second one is Heikin-Ashi--->Heikin-Ashi is a Japanese trading indicator that means "average pace". Heikin-Ashi charts resemble candlestick charts, but have a smoother appearance as they track a range of price movements, rather than tracking every price movement as with candlesticks. Heikin-Ashi was created in the 1700s by Munehisa Homma, who also created the candlestick chart. 
 
